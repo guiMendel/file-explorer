@@ -2,58 +2,81 @@ import montefiore.ulg.ac.be.graphics.*;
 
 public class GuiHandler implements ExplorerEventsHandler {
 
-	private ExplorerSwingView esv;
-	
-    GuiHandler(String[] args) throws NullHandlerException {
-        this.esv = new ExplorerSwingView(this);
-        
-        try {
-        	// First step to do before anything !!! 
-            this.esv.setRootNode(new A("Hey")); // set the root node with a silly "A" object
-        } catch (RootAlreadySetException e) {
-            e.printStackTrace();
-        }
+  private ExplorerSwingView swingView;
+  private TextAreaManager textArea;
+
+  GuiHandler(String[] args) throws NullHandlerException {
+    this.swingView = new ExplorerSwingView(this);
+    this.textArea = this.swingView.getTextAreaManager();
+
+    try {
+      this.swingView.setRootNode(new JFolder("I'm root"));
+    } catch (RootAlreadySetException e) {
+      e.printStackTrace();
     }
-	
-	@Override
-	public void createAliasEvent(Object selectedNode) {
-		// TODO Auto-generated method stub
-	}
+  }
 
-	@Override
-	public void createArchiveEvent(Object selectedNode) {
-		// TODO Auto-generated method stub
-	}
+  @Override
+  public void createAliasEvent(Object selectedNode) {
+    // TODO Auto-generated method stub
+  }
 
-	@Override
-	public void createCopyEvent(Object selectedNode) {
-		// TODO Auto-generated method stub
-	}
+  @Override
+  public void createArchiveEvent(Object selectedNode) {
+    // TODO Auto-generated method stub
+  }
 
-	@Override
-	public void createFileEvent(Object selectedNode) {
-		/*
-        if(selectedNode instanceof A) {
-            A a = (A) selectedNode;
-            System.out.println("It's A: " + a.getName());
-        }else {
-            B b = (B) selectedNode;
-            System.out.println("It's B: " + b.getName());
-        }*/
-	}
+  @Override
+  public void createCopyEvent(Object selectedNode) {
+    // TODO Auto-generated method stub
+  }
 
-	@Override
-	public void createFolderEvent(Object selectedNode) {
-		// TODO Auto-generated method stub
-	}
+  @Override
+  public void createFileEvent(Object selectedNode) {
+    // Forbid creating children for a file
+    if (selectedNode instanceof JFile) {
+      System.out.print("Bad boye!");
+      return;
+    }
 
-	@Override
-	public void doubleClickEvent(Object selectedNode) {
-		// TODO Auto-generated method stub
-	}
+    // Get user input for new file
+    String[] response = swingView.fileMenuDialog();
 
-	@Override
-	public void eventExit() {
-		// TODO Auto-generated method stub
-	}
+    // If canceled, stop
+    if (response == null)
+      return;
+
+    // Create new file
+    JFile createdFile = new JFile(response[0], response[1]);
+
+    // Insert file in tree
+    try {
+      swingView.addNodeToSelectedNode(createdFile);
+    } catch (NoSelectedNodeException error) {
+      System.out.print("Select a file, bad boye!");
+      return;
+    }
+
+    // Refresh tree
+    swingView.refreshTree();
+  }
+
+  @Override
+  public void createFolderEvent(Object selectedNode) {
+    // TODO Auto-generated method stub
+  }
+
+  @Override
+  public void doubleClickEvent(Object selectedNode) {
+    if (selectedNode instanceof JFile) {
+      System.out.print("File: " + selectedNode);
+    } else if (selectedNode instanceof JFolder) {
+      System.out.print("Folder: " + selectedNode);
+    }
+  }
+
+  @Override
+  public void eventExit() {
+    // TODO Auto-generated method stub
+  }
 }
