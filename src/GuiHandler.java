@@ -43,8 +43,9 @@ public class GuiHandler implements ExplorerEventsHandler {
     String[] response = swingView.fileMenuDialog();
 
     // If canceled, stop
-    if (response == null)
+    if (response == null) {
       return;
+    }
 
     // Create new file
     JFile createdFile = new JFile(response[0], response[1]);
@@ -69,9 +70,12 @@ public class GuiHandler implements ExplorerEventsHandler {
   @Override
   public void doubleClickEvent(Object selectedNode) {
     if (selectedNode instanceof JFile) {
-      System.out.print("File: " + selectedNode);
-    } else if (selectedNode instanceof JFolder) {
-      System.out.print("Folder: " + selectedNode);
+      // Downcast
+      JFile file = (JFile) selectedNode;
+
+      // Update text area
+      textArea.clearAllText();
+      textArea.appendText(file.getText());
     }
   }
 
