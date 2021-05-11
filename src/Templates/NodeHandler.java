@@ -11,17 +11,17 @@ abstract public class NodeHandler {
   abstract protected void conditionCheck(Object selectedNode) throws Exception;
 
   // Returns the component on which to perform the operation
-  abstract protected JComponent getComponent(Object selectedNode) throws Exception;
+  abstract protected Component getComponent(Object selectedNode) throws Exception;
 
   // Returns the component on which to perform the operation
-  abstract protected void operateComponent(JComponent component) throws Exception;
+  abstract protected void operateComponent(Component component) throws Exception;
 
   public void handle(Object selectedNode) throws Exception {
     // Check all conditions
     conditionCheck(selectedNode);
 
     // Get the handled component
-    JComponent handledComponent = getComponent(selectedNode);
+    Component handledComponent = getComponent(selectedNode);
 
     // If no component, stop
     if (handledComponent == null)

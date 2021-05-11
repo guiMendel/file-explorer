@@ -9,7 +9,7 @@ public class GuiHandler implements ExplorerEventsHandler {
     this.textArea = this.swingView.getTextAreaManager();
 
     try {
-      this.swingView.setRootNode(new JFolder("I'm root"));
+      this.swingView.setRootNode(new FolderComponent("I'm root"));
     } catch (RootAlreadySetException e) {
       e.printStackTrace();
     }
@@ -27,24 +27,24 @@ public class GuiHandler implements ExplorerEventsHandler {
 
   @Override
   public void createCopyEvent(Object selectedNode) {
-    // TODO Auto-generated method stub
+    copyNode(selectedNode);
   }
 
   @Override
   public void createFileEvent(Object selectedNode) {
-    createNewNode(selectedNode, new JFileFactory(swingView));
+    createNewNode(selectedNode, new FileFactory(swingView));
   }
 
   @Override
   public void createFolderEvent(Object selectedNode) {
-    createNewNode(selectedNode, new JFolderFactory(swingView));
+    createNewNode(selectedNode, new FolderFactory(swingView));
   }
 
   @Override
   public void doubleClickEvent(Object selectedNode) {
-    if (selectedNode instanceof JFile) {
+    if (selectedNode instanceof FileComponent) {
       // Downcast
-      JFile file = (JFile) selectedNode;
+      FileComponent file = (FileComponent) selectedNode;
 
       // Update text area
       textArea.clearAllText();
@@ -58,14 +58,30 @@ public class GuiHandler implements ExplorerEventsHandler {
   }
 
   // Creates a new node (using the provided factory) as a child of the given node
-  private void createNewNode(Object selectedNode, JComponentFactory factory) {
+  private void createNewNode(Object selectedNode, ComponentFactory factory) {
     try {
       NodeMaker nodeMaker = new NodeMaker(swingView, factory);
       nodeMaker.handle(selectedNode);
     } catch (NoSelectedNodeException | InvalidSelectedNodeException error) {
       swingView.showPopupError("Please, select a folder");
     } catch (Exception error) {
-      return;
+      swingView.showPopupError("An unexpected error occured");
+    }
+  }
+
+  // Copy a node
+  private void copyNode(Object selectedNode) {
+    try {
+      NodeReplicator nodeReplicator = new NodeReplicator(swingView);
+      nodeReplicator.handle(selectedNode);
+    } catch (NoSelectedNodeException error) {
+      swingView.showPopupError("Please, select a file or a folder");
+    } catch (NoParentNodeException error) {
+      swingView.showPopupError("Cannot copy a component without a parent");
+    } catch (InvalidSelectedNodeException error) {
+      swingView.showPopupError(error.getMessage());
+    } catch (Exception error) {
+      swingView.showPopupError("An unexpected error occured");
     }
   }
 }

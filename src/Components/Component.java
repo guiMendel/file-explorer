@@ -1,7 +1,7 @@
-abstract public class JComponent {
+abstract public class Component {
   protected String name;
 
-  public JComponent(String name) {
+  public Component(String name) {
     super();
     this.name = name;
   }
@@ -20,5 +20,5 @@ abstract public class JComponent {
   }
 
   // Prototype implementation
-  abstract public JComponent copy();
+  abstract public Component copy();
 }
