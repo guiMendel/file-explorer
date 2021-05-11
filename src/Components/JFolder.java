@@ -3,8 +3,9 @@ public class JFolder extends JComponent {
     super(name);
   }
 
-  // @Override
-  // public JComponent copy() {
-
-  // }
+  @Override
+  public JComponent copy() {
+    return new JFolder(name + " (copy)");
+    // TODO recursive copying of children
+  }
 }

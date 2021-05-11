@@ -10,8 +10,8 @@ public class JFile extends JComponent {
     return text;
   }
 
-  // @Override
-  // public JComponent copy() {
-    
-  // }
+  @Override
+  public JComponent copy() {
+    return new JFile(name + " (copy)", text);
+  }
 }

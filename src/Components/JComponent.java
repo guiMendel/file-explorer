@@ -20,5 +20,5 @@ abstract public class JComponent {
   }
 
   // Prototype implementation
-  // abstract public JComponent copy();
+  abstract public JComponent copy();
 }

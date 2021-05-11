@@ -59,7 +59,13 @@ public class GuiHandler implements ExplorerEventsHandler {
 
   // Creates a new node (using the provided factory) as a child of the given node
   private void createNewNode(Object selectedNode, JComponentFactory factory) {
-    NodeHandler nodeHandler = new NodeHandler(swingView, factory);
-    nodeHandler.emplaceNode(selectedNode);
+    try {
+      NodeMaker nodeMaker = new NodeMaker(swingView, factory);
+      nodeMaker.handle(selectedNode);
+    } catch (NoSelectedNodeException | InvalidSelectedNodeException error) {
+      swingView.showPopupError("Please, select a folder");
+    } catch (Exception error) {
+      return;
+    }
   }
 }
