@@ -1,7 +1,6 @@
 import montefiore.ulg.ac.be.graphics.*;
 
 public class GuiHandler implements ExplorerEventsHandler {
-
   private ExplorerSwingView swingView;
   private TextAreaManager textArea;
 
@@ -33,38 +32,12 @@ public class GuiHandler implements ExplorerEventsHandler {
 
   @Override
   public void createFileEvent(Object selectedNode) {
-    // Forbid creating children for a file
-    if (selectedNode instanceof JFile) {
-      System.out.print("Bad boye!");
-      return;
-    }
-
-    // Get user input for new file
-    String[] response = swingView.fileMenuDialog();
-
-    // If canceled, stop
-    if (response == null) {
-      return;
-    }
-
-    // Create new file
-    JFile createdFile = new JFile(response[0], response[1]);
-
-    // Insert file in tree
-    try {
-      swingView.addNodeToSelectedNode(createdFile);
-    } catch (NoSelectedNodeException error) {
-      System.out.print("Select a file, bad boye!");
-      return;
-    }
-
-    // Refresh tree
-    swingView.refreshTree();
+    createNewNode(selectedNode, new JFileFactory(swingView));
   }
 
   @Override
   public void createFolderEvent(Object selectedNode) {
-    // TODO Auto-generated method stub
+    createNewNode(selectedNode, new JFolderFactory(swingView));
   }
 
   @Override
@@ -82,5 +55,11 @@ public class GuiHandler implements ExplorerEventsHandler {
   @Override
   public void eventExit() {
     // TODO Auto-generated method stub
+  }
+
+  // Creates a new node (using the provided factory) as a child of the given node
+  private void createNewNode(Object selectedNode, JComponentFactory factory) {
+    NodeHandler nodeHandler = new NodeHandler(swingView, factory);
+    nodeHandler.emplaceNode(selectedNode);
   }
 }

@@ -1,19 +1,13 @@
-public class JFile {
-  private String name;
-  private String text;
+abstract public class JComponent {
+  protected String name;
 
-  public JFile(String name, String text) {
+  public JComponent(String name) {
     super();
     this.name = name;
-    this.text = text;
   }
 
   public String getName() {
     return name;
-  }
-
-  public String getText() {
-    return text;
   }
 
   public void setName(String name) {
@@ -24,4 +18,7 @@ public class JFile {
   public String toString() {
     return name;
   }
+
+  // Prototype implementation
+  // abstract public JComponent copy();
 }
