@@ -10,10 +10,10 @@ public class GuiHandler implements ExplorerEventsHandler {
 
     try {
       // Create root node
-      FolderNode root = new FolderNode(new FolderComponent("I'm root"), null);
+      FolderNode root = (FolderNode) FolderFactory.makeFolderNode("I'm root", null);
       this.swingView.setRootNode(root);
-    } catch (RootAlreadySetException e) {
-      e.printStackTrace();
+    } catch (InvalidNodeNameException | RootAlreadySetException error) {
+      error.printStackTrace();
     }
   }
 
@@ -67,6 +67,8 @@ public class GuiHandler implements ExplorerEventsHandler {
       nodeMaker.handle(selectedNode);
     } catch (NoSelectedNodeException | InvalidSelectedNodeException error) {
       swingView.showPopupError("Please, select a folder");
+    } catch (InvalidNodeNameException error) {
+      swingView.showPopupError("This name is not available");
     } catch (Exception error) {
       swingView.showPopupError("An unexpected error occured");
     }

@@ -23,8 +23,14 @@ abstract public class Component implements ComponentInterface, PrototypeInterfac
   }
 
   // Allow comparing two different components
-  public boolean equals(Component other) {
-    return name == other.name && getClass() == other.getClass();
+  @Override
+  public boolean equals(Object other) {
+    if (!(other instanceof Component))
+      return false;
+
+    Component castOther = (Component) other;
+
+    return getName().equals(castOther.getName()) && getClass().equals(castOther.getClass());
   }
 
   // Prototype implementation

@@ -5,15 +5,20 @@ public class FolderFactory extends NodeFactory {
     super(swingView);
   }
 
+  public static Node makeFolderNode(String name, FolderNode parentFolder) throws InvalidNodeNameException {
+    return new FolderNode(new FolderComponent(name), parentFolder);
+  }
+
   @Override
-  public Node assemble(FolderNode parentFolder) {
+  public Node assemble(FolderNode parentFolder) throws InvalidNodeNameException {
     // Get user input
     String input = swingView.folderMenuDialog();
 
     // If canceled, stop
-    if (input == null) return null;
+    if (input == null)
+      return null;
 
     // Wrap folder in FolderNode
-    return new FolderNode(new FolderComponent(input), parentFolder);
+    return makeFolderNode(input, parentFolder);
   }
 }

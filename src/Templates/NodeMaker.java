@@ -3,7 +3,7 @@ import montefiore.ulg.ac.be.graphics.*;
 // Class for making new nodes
 public class NodeMaker extends NodeHandler {
   NodeFactory factory;
-  
+
   public NodeMaker(ExplorerSwingView swingView, NodeFactory factory) {
     super(swingView);
     this.factory = factory;

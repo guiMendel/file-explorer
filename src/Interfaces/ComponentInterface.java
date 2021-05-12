@@ -4,5 +4,8 @@ public interface ComponentInterface {
   void setName(String name);
 
   @Override
-  public String toString();
+  String toString();
+
+  @Override
+  boolean equals(Object other);
 }

@@ -7,5 +7,5 @@ public abstract class NodeFactory {
     this.swingView = swingView;
   }
 
-  public abstract Node assemble(FolderNode parentFolder);
+  public abstract Node assemble(FolderNode parentFolder) throws InvalidNodeNameException;
 }

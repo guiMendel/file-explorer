@@ -6,6 +6,5 @@ public class FolderComponent extends Component {
   @Override
   public Component copy() {
     return new FolderComponent(name + " (copy)");
-    // TODO recursive copying of children
   }
 }
