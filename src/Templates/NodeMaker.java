@@ -1,9 +1,10 @@
 import montefiore.ulg.ac.be.graphics.*;
 
+// Class for making new nodes
 public class NodeMaker extends NodeHandler {
-  ComponentFactory factory;
+  NodeFactory factory;
   
-  public NodeMaker(ExplorerSwingView swingView, ComponentFactory factory) {
+  public NodeMaker(ExplorerSwingView swingView, NodeFactory factory) {
     super(swingView);
     this.factory = factory;
   }
@@ -11,21 +12,22 @@ public class NodeMaker extends NodeHandler {
   // Verifies all conditions for the operation
   @Override
   protected void conditionCheck(Object selectedNode) throws Exception {
-    // Forbid creating children for a file
-    if (selectedNode instanceof FileComponent) {
-      throw new InvalidSelectedNodeException("Files cannot have children nodes");
+    // Forbid creating children for anything other than a folder
+    if (!(selectedNode instanceof FolderNode)) {
+      throw new InvalidSelectedNodeException("Only folders may have children");
     }
   }
 
-  // Returns the component on which to perform the operation
+  // Returns the node on which to perform the operation
   @Override
-  protected Component getComponent(Object selectedNode) throws Exception {
-    return factory.assemble();
+  protected Node getNode(Object selectedNode) throws Exception {
+    // We know for sure this node is a folder
+    return factory.assemble((FolderNode) selectedNode);
   }
 
-  // Returns the component on which to perform the operation
+  // Perform operation
   @Override
-  protected void operateComponent(Component component) throws Exception {
-    swingView.addNodeToSelectedNode(component);
+  protected void operateNode(Node node) throws Exception {
+    swingView.addNodeToSelectedNode(node);
   }
 }

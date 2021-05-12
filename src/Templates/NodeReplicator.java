@@ -1,5 +1,6 @@
 import montefiore.ulg.ac.be.graphics.*;
 
+// Class for duplicating nodes
 public class NodeReplicator extends NodeHandler {
   public NodeReplicator(ExplorerSwingView swingView) {
     super(swingView);
@@ -14,24 +15,24 @@ public class NodeReplicator extends NodeHandler {
     }
 
     // Forbid copying alias
-    if (!(selectedNode instanceof Component)) {
+    if (!(selectedNode instanceof Node)) {
       throw new InvalidSelectedNodeException("Cannot copy an alias");
     }
   }
 
-  // Returns the component on which to perform the operation
+  // Returns the node on which to perform the operation
   @Override
-  protected Component getComponent(Object selectedNode) throws Exception {
-    // At this point we know for sure selectedNode is a Component
-    Component component = (Component) selectedNode;
+  protected Node getNode(Object selectedNode) throws Exception {
+    // At this point we know for sure selectedNode is a Node
+    Node node = (Node) selectedNode;
 
     // Copy the node
-    return component.copy();
+    return node.copy();
   }
 
   // Perform operation
   @Override
-  protected void operateComponent(Component component) throws Exception {
-    swingView.addNodeToParentNode(component);
+  protected void operateNode(Node node) throws Exception {
+    swingView.addNodeToParentNode(node);
   }
 }

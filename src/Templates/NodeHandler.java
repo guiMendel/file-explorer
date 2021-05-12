@@ -1,5 +1,6 @@
 import montefiore.ulg.ac.be.graphics.*;
 
+// Abstract mother class for node handling
 abstract public class NodeHandler {
   protected ExplorerSwingView swingView;
 
@@ -10,25 +11,25 @@ abstract public class NodeHandler {
   // Verifies all conditions for the operation
   abstract protected void conditionCheck(Object selectedNode) throws Exception;
 
-  // Returns the component on which to perform the operation
-  abstract protected Component getComponent(Object selectedNode) throws Exception;
+  // Returns the node on which to perform the operation
+  abstract protected Node getNode(Object selectedNode) throws Exception;
 
-  // Returns the component on which to perform the operation
-  abstract protected void operateComponent(Component component) throws Exception;
+  // Perform operation
+  abstract protected void operateNode(Node node) throws Exception;
 
   public void handle(Object selectedNode) throws Exception {
     // Check all conditions
     conditionCheck(selectedNode);
 
-    // Get the handled component
-    Component handledComponent = getComponent(selectedNode);
+    // Get the handled node
+    Node handledNode = getNode(selectedNode);
 
-    // If no component, stop
-    if (handledComponent == null)
+    // If no node, stop
+    if (handledNode == null)
       return;
 
     // Perform operation
-    operateComponent(handledComponent);
+    operateNode(handledNode);
 
     // Refresh tree
     swingView.refreshTree();

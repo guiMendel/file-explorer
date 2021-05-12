@@ -1,16 +1,19 @@
 import montefiore.ulg.ac.be.graphics.*;
 
-public class FolderFactory extends ComponentFactory {
+public class FolderFactory extends NodeFactory {
   public FolderFactory(ExplorerSwingView swingView) {
     super(swingView);
   }
 
   @Override
-  public Component assemble() {
+  public Node assemble(FolderNode parentFolder) {
     // Get user input
     String input = swingView.folderMenuDialog();
 
-    // Make folder
-    return input != null ? new FolderComponent(input) : null;
+    // If canceled, stop
+    if (input == null) return null;
+
+    // Wrap folder in FolderNode
+    return new FolderNode(new FolderComponent(input), parentFolder);
   }
 }

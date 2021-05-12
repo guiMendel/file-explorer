@@ -9,7 +9,9 @@ public class GuiHandler implements ExplorerEventsHandler {
     this.textArea = this.swingView.getTextAreaManager();
 
     try {
-      this.swingView.setRootNode(new FolderComponent("I'm root"));
+      // Create root node
+      FolderNode root = new FolderNode(new FolderComponent("I'm root"), null);
+      this.swingView.setRootNode(root);
     } catch (RootAlreadySetException e) {
       e.printStackTrace();
     }
@@ -42,13 +44,14 @@ public class GuiHandler implements ExplorerEventsHandler {
 
   @Override
   public void doubleClickEvent(Object selectedNode) {
-    if (selectedNode instanceof FileComponent) {
-      // Downcast
-      FileComponent file = (FileComponent) selectedNode;
-
+    // Get selected node's component
+    Component component = ((Node) selectedNode).getComponent();
+    
+    // If it's a file, we show it's content
+    if (component instanceof FileComponent) {
       // Update text area
       textArea.clearAllText();
-      textArea.appendText(file.getText());
+      textArea.appendText(((FileComponent) component).getText());
     }
   }
 
@@ -58,7 +61,7 @@ public class GuiHandler implements ExplorerEventsHandler {
   }
 
   // Creates a new node (using the provided factory) as a child of the given node
-  private void createNewNode(Object selectedNode, ComponentFactory factory) {
+  private void createNewNode(Object selectedNode, NodeFactory factory) {
     try {
       NodeMaker nodeMaker = new NodeMaker(swingView, factory);
       nodeMaker.handle(selectedNode);
@@ -77,7 +80,7 @@ public class GuiHandler implements ExplorerEventsHandler {
     } catch (NoSelectedNodeException error) {
       swingView.showPopupError("Please, select a file or a folder");
     } catch (NoParentNodeException error) {
-      swingView.showPopupError("Cannot copy a component without a parent");
+      swingView.showPopupError("Cannot copy a node without a parent");
     } catch (InvalidSelectedNodeException error) {
       swingView.showPopupError(error.getMessage());
     } catch (Exception error) {
