@@ -1,18 +1,18 @@
 // Decorator for members of the Component class. Handles the node tree functionalities
 public class Node implements ComponentInterface, Prototype<Node> {
   // Wrapped component
-  Component component;
+  ComponentInterface component;
 
   // Parent folder
   FolderNode parentFolder;
 
-  public Node(Component component, FolderNode parentFolder) throws InvalidNodeNameException {
+  public Node(ComponentInterface component, FolderNode parentFolder) throws InvalidNodeNameException {
     super();
     this.component = component;
     setParentFolder(parentFolder);
   }
 
-  public Component getComponent() {
+  public ComponentInterface getComponent() {
     return component;
   }
 
@@ -38,11 +38,10 @@ public class Node implements ComponentInterface, Prototype<Node> {
     parentFolder.add(this);
   }
 
-  // Prototype implementation
-  @Override
-  public Node copy() {
+  // Copiess this node into another folder
+  public Node copyTo(FolderNode parentFolder) {
     // Copied component
-    Component component = this.component.copy();
+    ComponentInterface component = (ComponentInterface) this.component.copy();
 
     // If copied component's name isn't available, add more (copy) to it until it is
     do {
@@ -54,6 +53,12 @@ public class Node implements ComponentInterface, Prototype<Node> {
     } while (true);
   }
 
+  // Prototype implementation
+  @Override
+  public Node copy() {
+    copyTo(this.parentFolder);
+  }
+
   // Proxy methods
 
   @Override
@@ -62,13 +67,8 @@ public class Node implements ComponentInterface, Prototype<Node> {
   }
 
   @Override
-  public void setName(String name) {
-    component.setName(name);
-  }
-
-  @Override
   public String toString() {
-    return component.toString();
+    return getName();
   }
 
   @Override

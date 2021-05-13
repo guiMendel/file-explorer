@@ -5,7 +5,7 @@ public class FolderNode extends Node {
   // All children nodes of this folder
   List<Node> children;
 
-  public FolderNode(Component component, FolderNode parentFolder) throws InvalidNodeNameException {
+  public FolderNode(ComponentInterface component, FolderNode parentFolder) throws InvalidNodeNameException {
     super(component, parentFolder);
     children = new ArrayList<Node>();
   }
@@ -29,7 +29,7 @@ public class FolderNode extends Node {
   @Override
   public FolderNode copy() {
     // Copied component
-    Component component = this.component.copy();
+    ComponentInterface component = (ComponentInterface) this.component.copy();
 
     // Copied node
     FolderNode clone = null;

@@ -13,13 +13,8 @@ abstract public class Component implements ComponentInterface, Prototype<Compone
   }
 
   @Override
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  @Override
   public String toString() {
-    return name;
+    return getName();
   }
 
   // Allow comparing two different components

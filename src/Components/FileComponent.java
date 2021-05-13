@@ -1,4 +1,4 @@
-public class FileComponent extends Component {
+public class FileComponent extends Component implements FileInterface {
   private String text;
 
   public FileComponent(String name, String text) {
@@ -6,6 +6,7 @@ public class FileComponent extends Component {
     this.text = text;
   }
 
+  @Override
   public String getText() {
     return text;
   }
