@@ -16,6 +16,10 @@ public class Node implements ComponentInterface {
     return component;
   }
 
+  public FolderNode getParentFolder() {
+    return parentFolder;
+  }
+  
   public void setParentFolder(FolderNode newParent) throws InvalidNodeNameException {
     // Make sure the component's name isn't already taken
     if (newParent != null && newParent.contains(this)) {

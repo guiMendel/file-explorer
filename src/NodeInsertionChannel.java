@@ -43,4 +43,9 @@ public class NodeInsertionChannel {
       swingView.addNodeToParentNode(node);
     }
   }
+
+  // Handles any new aliases
+  public void aliasCreatedEvent(Node node) throws NoParentNodeException, NoSelectedNodeException {
+    swingView.addNodeToParentNode(node);
+  }
 }

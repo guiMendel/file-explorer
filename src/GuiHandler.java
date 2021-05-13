@@ -38,7 +38,7 @@ public class GuiHandler implements ExplorerEventsHandler {
 
   @Override
   public void createAliasEvent(Object selectedNode) {
-    // TODO Auto-generated method stub
+    aliasNode(selectedNode);
   }
 
   @Override
@@ -102,6 +102,24 @@ public class GuiHandler implements ExplorerEventsHandler {
       swingView.showPopupError("Please, select a file or a folder");
     } catch (NoParentNodeException error) {
       swingView.showPopupError("Cannot copy a node without a parent");
+    } catch (InvalidSelectedNodeException error) {
+      swingView.showPopupError(error.getMessage());
+    } catch (NodeCreationException error) {
+      swingView.showPopupError("Invalid action");
+    } catch (Exception error) {
+      swingView.showPopupError("An unexcpected error occured");
+    }
+  }
+
+  // Copy a node
+  private void aliasNode(Object selectedNode) {
+    try {
+      NodeAliasMaker aliasMaker = new NodeAliasMaker(swingView);
+      aliasMaker.handle(selectedNode);
+    } catch (NoSelectedNodeException error) {
+      swingView.showPopupError("Please, select a file");
+    } catch (NoParentNodeException error) {
+      swingView.showPopupError("Cannot create an alias of a node without a parent");
     } catch (InvalidSelectedNodeException error) {
       swingView.showPopupError(error.getMessage());
     } catch (NodeCreationException error) {
