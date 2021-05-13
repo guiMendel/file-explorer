@@ -1,4 +1,4 @@
-public class InvalidSelectedNodeException extends Exception {
+public class InvalidSelectedNodeException extends NodeCreationException {
   public InvalidSelectedNodeException(String errorMessage) {
     super(errorMessage);
   }

@@ -18,6 +18,10 @@ public class GuiHandler implements ExplorerEventsHandler {
     this.textArea = new TextArea(this.swingView);
     observeDoubleClick(this.textArea);
 
+    // Set off node insertion channel
+    NodeInsertionChannel channel = NodeInsertionChannel.getChannel();
+    channel.setSwingView(this.swingView);
+
     try {
       // Create root node
       FolderNode root = (FolderNode) FolderFactory.makeFolderNode("I'm root", null);
@@ -74,12 +78,16 @@ public class GuiHandler implements ExplorerEventsHandler {
     try {
       NodeMaker nodeMaker = new NodeMaker(swingView, factory);
       nodeMaker.handle(selectedNode);
+    } catch (UserCanceledException exception) {
+      return;
     } catch (NoSelectedNodeException | InvalidSelectedNodeException error) {
       swingView.showPopupError("Please, select a folder");
     } catch (InvalidNodeNameException error) {
       swingView.showPopupError("This name is not available");
+    } catch (NodeCreationException error) {
+      swingView.showPopupError("Invalid action");
     } catch (Exception error) {
-      swingView.showPopupError("An unexpected error occured");
+      swingView.showPopupError("An unexcpected error occured");
     }
   }
 
@@ -88,14 +96,18 @@ public class GuiHandler implements ExplorerEventsHandler {
     try {
       NodeReplicator nodeReplicator = new NodeReplicator(swingView);
       nodeReplicator.handle(selectedNode);
+    } catch (UserCanceledException exception) {
+      return;
     } catch (NoSelectedNodeException error) {
       swingView.showPopupError("Please, select a file or a folder");
     } catch (NoParentNodeException error) {
       swingView.showPopupError("Cannot copy a node without a parent");
     } catch (InvalidSelectedNodeException error) {
       swingView.showPopupError(error.getMessage());
+    } catch (NodeCreationException error) {
+      swingView.showPopupError("Invalid action");
     } catch (Exception error) {
-      swingView.showPopupError("An unexpected error occured");
+      swingView.showPopupError("An unexcpected error occured");
     }
   }
 }

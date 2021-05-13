@@ -10,13 +10,13 @@ public class FolderFactory extends NodeFactory {
   }
 
   @Override
-  public Node assemble(FolderNode parentFolder) throws InvalidNodeNameException {
+  public Node getNode(FolderNode parentFolder) throws NodeCreationException {
     // Get user input
     String input = swingView.folderMenuDialog();
 
-    // If canceled, stop
+    // Handle canceling
     if (input == null)
-      return null;
+      throw new UserCanceledException();
 
     // Wrap folder in FolderNode
     return makeFolderNode(input, parentFolder);

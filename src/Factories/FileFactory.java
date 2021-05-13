@@ -10,13 +10,13 @@ public class FileFactory extends NodeFactory {
   }
 
   @Override
-  public Node assemble(FolderNode parentFolder) throws InvalidNodeNameException {
+  public Node getNode(FolderNode parentFolder) throws NodeCreationException {
     // Get user input
     String[] input = swingView.fileMenuDialog();
 
-    // If canceled, stop
+    // Handle canceling
     if (input == null)
-      return null;
+      throw new UserCanceledException();
 
     // Wrap file in Node
     return makeFileNode(input[0], input[1], parentFolder);

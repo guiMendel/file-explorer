@@ -47,10 +47,18 @@ public class FolderNode extends Node {
       }
     } while (!componentValid);
 
+    // Populate the clone with copies of this folder's children
+    // copyChildrenTo(clone);
+
     return clone;
-    // TODO recursive copying of children
   }
 
-  // Adds a copy of all nodes in the provided list to the given FolderNode
-  
+  // Puts copies of all children into this folder
+  private void copyChildrenTo(FolderNode folder) {
+    // For every child
+    for (Node child : children) {
+      // Copy it into the folder
+      child.copyTo(folder);
+    }
+  }
 }

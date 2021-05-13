@@ -28,6 +28,7 @@ public class NodeMaker extends NodeHandler {
   // Perform operation
   @Override
   protected void operateNode(Node node) throws Exception {
-    swingView.addNodeToSelectedNode(node);
+    return;
+    // swingView.addNodeToSelectedNode(node);
   }
 }

@@ -56,7 +56,7 @@ public class Node implements ComponentInterface {
   // Prototype implementation
   @Override
   public Node copy() {
-    return (Node) copyTo(this.parentFolder);
+    return copyTo(this.parentFolder);
   }
 
   // Proxy methods
