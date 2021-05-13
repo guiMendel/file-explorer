@@ -1,5 +1,5 @@
 // Decorator for members of the Component class. Handles the node tree functionalities
-public class Node implements ComponentInterface, PrototypeInterface {
+public class Node implements ComponentInterface, Prototype<Node> {
   // Wrapped component
   Component component;
 

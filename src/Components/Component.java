@@ -1,4 +1,4 @@
-abstract public class Component implements ComponentInterface, PrototypeInterface {
+abstract public class Component implements ComponentInterface, Prototype<Component> {
   // Name of the component
   protected String name;
 
@@ -34,5 +34,6 @@ abstract public class Component implements ComponentInterface, PrototypeInterfac
   }
 
   // Prototype implementation
+  @Override
   abstract public Component copy();
 }
