@@ -1,4 +1,4 @@
-public class Alias implements FileInterface, Prototype<Alias> {
+public class Alias implements FileInterface {
   // Component this alias refers to
   FileComponent subject;
 
@@ -35,7 +35,7 @@ public class Alias implements FileInterface, Prototype<Alias> {
 
   // Prototype implementation
   @Override
-  abstract public Alias copy() {
+  public Alias copy() {
     return new Alias(subject);
   }
 }

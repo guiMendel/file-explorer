@@ -27,7 +27,7 @@ public class FolderNode extends Node {
 
   // Prototype implementation
   @Override
-  public FolderNode copy() {
+  public FolderNode copyTo(FolderNode parentFolder) {
     // Copied component
     ComponentInterface component = (ComponentInterface) this.component.copy();
 

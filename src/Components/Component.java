@@ -1,4 +1,4 @@
-abstract public class Component implements ComponentInterface, Prototype<Component> {
+abstract public class Component implements ComponentInterface {
   // Name of the component
   protected String name;
 

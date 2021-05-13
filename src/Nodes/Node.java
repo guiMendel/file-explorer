@@ -1,5 +1,5 @@
 // Decorator for members of the Component class. Handles the node tree functionalities
-public class Node implements ComponentInterface, Prototype<Node> {
+public class Node implements ComponentInterface {
   // Wrapped component
   ComponentInterface component;
 
@@ -56,7 +56,7 @@ public class Node implements ComponentInterface, Prototype<Node> {
   // Prototype implementation
   @Override
   public Node copy() {
-    copyTo(this.parentFolder);
+    return (Node) copyTo(this.parentFolder);
   }
 
   // Proxy methods

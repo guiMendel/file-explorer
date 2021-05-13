@@ -1,4 +1,4 @@
-public interface ComponentInterface {
+public interface ComponentInterface extends Prototype<ComponentInterface> {
   String getName();
 
   @Override
