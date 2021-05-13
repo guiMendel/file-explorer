@@ -1,12 +1,22 @@
+import java.util.List;
+import java.util.ArrayList;
+
 import montefiore.ulg.ac.be.graphics.*;
 
 public class GuiHandler implements ExplorerEventsHandler {
   private ExplorerSwingView swingView;
-  private TextAreaManager textArea;
+  private TextArea textArea;
+
+  // Observers
+  List<Observer<Node>> doubleClickObservers;
 
   GuiHandler(String[] args) throws NullHandlerException {
     this.swingView = new ExplorerSwingView(this);
-    this.textArea = this.swingView.getTextAreaManager();
+    this.doubleClickObservers = new ArrayList<Observer<Node>>();
+
+    // Create observers
+    this.textArea = new TextArea(this.swingView);
+    observeDoubleClick(this.textArea);
 
     try {
       // Create root node
@@ -15,6 +25,11 @@ public class GuiHandler implements ExplorerEventsHandler {
     } catch (InvalidNodeNameException | RootAlreadySetException error) {
       error.printStackTrace();
     }
+  }
+
+  // Subscribes a new observer
+  public void observeDoubleClick(Observer<Node> observer) {
+    doubleClickObservers.add(observer);
   }
 
   @Override
@@ -44,14 +59,8 @@ public class GuiHandler implements ExplorerEventsHandler {
 
   @Override
   public void doubleClickEvent(Object selectedNode) {
-    // Get selected node's component
-    Component component = ((Node) selectedNode).getComponent();
-    
-    // If it's a file, we show it's content
-    if (component instanceof FileComponent) {
-      // Update text area
-      textArea.clearAllText();
-      textArea.appendText(((FileComponent) component).getText());
+    for (Observer<Node> observer : doubleClickObservers) {
+      observer.update((Node) selectedNode);
     }
   }
 
