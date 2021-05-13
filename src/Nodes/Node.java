@@ -38,24 +38,36 @@ public class Node implements ComponentInterface {
     parentFolder.add(this);
   }
 
-  // Copiess this node into another folder
-  public Node copyTo(FolderNode parentFolder) {
+  // Copies this node into another folder
+  public Node copyTo(FolderNode parentFolder) throws Exception {
     // Copied component
     ComponentInterface component = (ComponentInterface) this.component.copy();
 
     // If copied component's name isn't available, add more (copy) to it until it is
     do {
       try {
-        return new Node(component, parentFolder);
+        Node node = new Node(component, parentFolder);
+
+        // Report that this node was copied
+        reportCopy(node);
+        return node;
+
       } catch (InvalidNodeNameException error) {
         component = component.copy();
       }
+
     } while (true);
+  }
+
+  // Reports that this node has created a copy
+  protected void reportCopy(Node node) throws Exception {
+    NodeInsertionChannel channel = NodeInsertionChannel.getChannel();
+    channel.nodeCopiedEvent(node);
   }
 
   // Prototype implementation
   @Override
-  public Node copy() {
+  public Node copy() throws Exception {
     return copyTo(this.parentFolder);
   }
 

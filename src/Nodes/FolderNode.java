@@ -27,7 +27,7 @@ public class FolderNode extends Node {
 
   // Prototype implementation
   @Override
-  public FolderNode copyTo(FolderNode parentFolder) {
+  public FolderNode copyTo(FolderNode parentFolder) throws Exception {
     // Copied component
     ComponentInterface component = (ComponentInterface) this.component.copy();
 
@@ -42,10 +42,15 @@ public class FolderNode extends Node {
       try {
         clone = new FolderNode(component, parentFolder);
         componentValid = true;
+
       } catch (InvalidNodeNameException error) {
         component = component.copy();
       }
+
     } while (!componentValid);
+
+    // Report that this node was copied
+    reportCopy(clone);
 
     // Populate the clone with copies of this folder's children
     // copyChildrenTo(clone);
@@ -54,7 +59,7 @@ public class FolderNode extends Node {
   }
 
   // Puts copies of all children into this folder
-  private void copyChildrenTo(FolderNode folder) {
+  private void copyChildrenTo(FolderNode folder) throws Exception {
     // For every child
     for (Node child : children) {
       // Copy it into the folder

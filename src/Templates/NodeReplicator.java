@@ -33,6 +33,7 @@ public class NodeReplicator extends NodeHandler {
   // Perform operation
   @Override
   protected void operateNode(Node node) throws Exception {
-    swingView.addNodeToParentNode(node);
+    return;
+    // swingView.addNodeToParentNode(node);
   }
 }
