@@ -11,24 +11,17 @@ public class NodeMaker extends NodeHandler {
 
   // Verifies all conditions for the operation
   @Override
-  protected void conditionCheck(Object selectedNode) throws Exception {
+  protected void conditionCheck(Node node) throws Exception {
     // Forbid creating children for anything other than a folder
-    if (!(selectedNode instanceof FolderNode)) {
+    if (!(node instanceof FolderNode)) {
       throw new InvalidSelectedNodeException("Only folders may have children");
     }
-  }
-
-  // Returns the node on which to perform the operation
-  @Override
-  protected Node getNode(Object selectedNode) throws Exception {
-    // We know for sure this node is a folder
-    return factory.assemble((FolderNode) selectedNode);
   }
 
   // Perform operation
   @Override
   protected void operateNode(Node node) throws Exception {
-    return;
-    // swingView.addNodeToSelectedNode(node);
+    // We know for sure this node is a folder
+    factory.assemble((FolderNode) node);
   }
 }

@@ -9,27 +9,20 @@ abstract public class NodeHandler {
   }
 
   // Verifies all conditions for the operation
-  abstract protected void conditionCheck(Object selectedNode) throws Exception;
+  abstract protected void conditionCheck(Node node) throws Exception;
 
-  // Returns the node on which to perform the operation
-  abstract protected Node getNode(Object selectedNode) throws Exception;
-
-  // Perform operation
+  // Performs operation
   abstract protected void operateNode(Node node) throws Exception;
 
   public void handle(Object selectedNode) throws Exception {
+    // We know it's a node for sure
+    Node node = (Node) selectedNode;
+    
     // Check all conditions
-    conditionCheck(selectedNode);
-
-    // Get the handled node
-    Node handledNode = getNode(selectedNode);
-
-    // If no node, stop
-    if (handledNode == null)
-      return;
+    conditionCheck(node);
 
     // Perform operation
-    operateNode(handledNode);
+    operateNode(node);
 
     // Refresh tree
     swingView.refreshTree();

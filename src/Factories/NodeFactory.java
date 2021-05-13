@@ -19,7 +19,7 @@ public abstract class NodeFactory {
       channel.nodeCreatedEvent(node);
     }
     catch (NoSelectedNodeException error) {
-      // Destroy all references to null so it gets collected
+      // Destroy all references to node so it gets collected
       node.setParentFolder(null);
 
       // Rethrow
