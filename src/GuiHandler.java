@@ -43,7 +43,7 @@ public class GuiHandler implements ExplorerEventsHandler {
 
   @Override
   public void createArchiveEvent(Object selectedNode) {
-    // TODO Auto-generated method stub
+    archiveNode(selectedNode);
   }
 
   @Override
@@ -111,7 +111,7 @@ public class GuiHandler implements ExplorerEventsHandler {
     }
   }
 
-  // Copy a node
+  // Alias a node
   private void aliasNode(Object selectedNode) {
     try {
       NodeAliasMaker aliasMaker = new NodeAliasMaker(swingView);
@@ -122,6 +122,28 @@ public class GuiHandler implements ExplorerEventsHandler {
       swingView.showPopupError("Cannot create an alias of a node without a parent");
     } catch (InvalidSelectedNodeException error) {
       swingView.showPopupError(error.getMessage());
+    } catch (InvalidNodeNameException error) {
+      swingView.showPopupError("This file already has an alias");
+    } catch (NodeCreationException error) {
+      swingView.showPopupError("Invalid action");
+    } catch (Exception error) {
+      swingView.showPopupError("An unexcpected error occured");
+    }
+  }
+
+  // Archive a node
+  private void archiveNode(Object selectedNode) {
+    try {
+      NodeArchiveMaker aliasMaker = new NodeArchiveMaker(swingView);
+      aliasMaker.handle(selectedNode);
+    } catch (NoSelectedNodeException error) {
+      swingView.showPopupError("Please, select a folder");
+    } catch (NoParentNodeException error) {
+      swingView.showPopupError("Cannot create an archive of a node without a parent");
+    } catch (InvalidSelectedNodeException error) {
+      swingView.showPopupError(error.getMessage());
+    } catch (InvalidNodeNameException error) {
+      swingView.showPopupError("This name is unavailable");
     } catch (NodeCreationException error) {
       swingView.showPopupError("Invalid action");
     } catch (Exception error) {

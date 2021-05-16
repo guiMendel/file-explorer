@@ -48,4 +48,9 @@ public class NodeInsertionChannel {
   public void aliasCreatedEvent(Node node) throws NoParentNodeException, NoSelectedNodeException {
     swingView.addNodeToParentNode(node);
   }
+
+  // Handles any new archives
+  public void archiveCreatedEvent(Node node) throws NoParentNodeException, NoSelectedNodeException {
+    swingView.addNodeToParentNode(node);
+  }
 }
