@@ -40,24 +40,5 @@ public class Alias extends Node {
     // Report that this node was copied
     reportCopy(clone);
     return clone;
-
-    // // Copied component
-    // ComponentInterface component = (ComponentInterface) this.component.copy();
-
-    // // If copied component's name isn't available, add more (copy) to it until it
-    // is
-    // do {
-    // try {
-    // Node node = new Node(component, parentFolder);
-
-    // // Report that this node was copied
-    // reportCopy(node);
-    // return node;
-
-    // } catch (InvalidNodeNameException error) {
-    // component = component.copy();
-    // }
-
-    // } while (true);
   }
 }
