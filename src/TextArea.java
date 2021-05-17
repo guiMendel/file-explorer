@@ -15,12 +15,12 @@ public class TextArea implements Observer<Node> {
     ComponentInterface component = node.getComponent();
 
     // If it's a file, we show it's content
-    if (component instanceof FileInterface) {
-      displayFile((FileInterface) component);
+    if (component instanceof FileComponent) {
+      displayFile((FileComponent) component);
     }
   }
 
-  private void displayFile(FileInterface file) {
+  private void displayFile(FileComponent file) {
     // Update text area
     textArea.clearAllText();
     textArea.appendText(file.getText());
